@@ -34,7 +34,7 @@ end
 
 LF_HOST    = "ws.audioscrobbler.com"
 LF_PATH    = "/2.0/"
-LF_API_KEY = "b25b959554ed76058ac220b7b2e0a026"
+LF_API_KEY = "7d7fa519b0e7b34a3905eb921bfad20d"
 LF_METHOD  = "tag.gettoptracks"
 
 def retrieve_songs_by_tag(tag)
