@@ -10,8 +10,8 @@ if(!($vote = @$_GET['vote'])) {
     Your name: <input type=text name="first_name" size="17">
           <input type=text name="last_name" size="17"><br /><br />
     Your birth year: <input type=text name="birth_year" size="4">
-    Your sex:  <input type=radio name="sex" value="M"> <i>Male</i>
-          <input type=radio name="sex" value="F"> <i>Female</i><br /><br />
+    Your sex:  <input type=radio name="sex" value="male"> <i>Male</i>
+          <input type=radio name="sex" value="female"> <i>Female</i><br /><br />
     Your current home-town: <input type=text name="city" size="25"><br /><br />
 
     <b>Survey:</b><br />

@@ -24,17 +24,17 @@ title="Autumn Leaves" album="Autumn Leaves" artist="Human or Robot?" />
       array('first_name', 'last_name', 'sex', 'birthday', 'current_location'));
     $info = $user_info[0];
     $birth_year = isset($info['birthday']) ? 
-     date("Y", strptime($info['birthday'], "%m %d, %Y") : '';
+     date("Y", strptime($info['birthday'], "%m %d, %Y")) : '';
     $city =  isset($info['current_location']) ? 
      $info['current_location']['city'] : '';
 
-    $data_file = "/tmp/survey.txt";
+    $data_file = "/tmp/fb_survey.txt";
     $text  = "|" . date("Y.m.d H:i:s") . "| ";
     $text .= "|" . $vote . "| ";
     $text .= "|" . $info['first_name'] ." ". $info['last_name'] ."| ";
     $text .= "|" . $info['sex'] . "| ";
-    $text .= "|" . $info['birthday'] . "| ";
-    $text .= "|" . $info['city'] . "|";
+    $text .= "|" . $birth_year . "| ";
+    $text .= "|" . $city . "|";
     $file = fopen($data_file, "a");
     fwrite($file, $text ."\n");
     fclose($file);
