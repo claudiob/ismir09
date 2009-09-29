@@ -10,7 +10,7 @@ A better solution is to employ a lyrics-based Web site that offers an API to pro
 LyricsFly has an API that accepts in input a user ID, artist name and song title and returns the lyrics of that song in an XML format.
 For instance, to obtain the lyrics for the song "Where the wild roses grow" by Nick Cave And The Bad Seeds, you need to access the following URL:
 
-http://lyricsfly.com/api/api.php?i=b14851dad4030d0e3-temporary.API.access&a=Nick Cave And The Bad Seeds&t=Where The Wild Roses Grow
+http://lyricsfly.com/api/api.php?i=b384969015a24d99b-temporary.API.access&a=Nick Cave And The Bad Seeds&t=Where The Wild Roses Grow
 
 The query has indeed three parameters: user ID, artist name, song title.
 One thing about the user ID: you have to request one to LyricsFly, the one in this example is a temporary one, that you have to substitute with a new one, just read the API documentation page on LyricsFly site.

@@ -13,7 +13,12 @@ For this purpose, we will use The Echo Nest. The Echo Nest has a Web API that ta
 I have prepared a python script called mood_evaluation.py that submits to the Echo Nest API two audio files that are indicative of a "happy" and a "sad" mood. The Echo Nest analyses this two files and returns their mode (major/minor) and tempo.
 
 In order to run this script, the pyechonest has to be downloaded from http://code.google.com/p/pyechonest/ and installed calling:
+$ wget http://pyechonest.googlecode.com/files/pyechonest-0.1a.zip
+$ unzip pyechonest-0.1a.zip 
+$ cd pyechonest
 $ sudo python setup.py install
+$ cd ..
+$ sudo rm -rf pyecho*
 
 ##################
 
