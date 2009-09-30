@@ -1,1 +1,2 @@
-$api_key = "COPY AND PASTE HERE YOUR LYRICSFLY API KEY"
+# Substitute with your LyricsFly API key
+$lyricsfly_key = "PASTE YOUR KEY HERE"
