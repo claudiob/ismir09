@@ -1,1 +1,1 @@
-Redirect  /gmapradio  http://www.google.com/maps/mpl?moduleurl=http%3A%2F%2Fgmapradio.baccigalupo.com%2Fkml%2Fmapplet.xml
+Redirect  /gmapradio  http://www.google.com/maps/mpl?moduleurl=http://maps.google.com/ig/add?synd=mpl&pid=mpl&moduleurl=http://gmapradio.baccigalupo.com/usradio/index.xml
