@@ -1,9 +1,8 @@
 <?php
+require_once('facebook_key.php');
+
 require_once('facebook-platform/php/facebook.php');
-$appid   = '170850830008'; # COPY AND PASTE
-$api_key = '7b835778bae3c255b0586a55fa2043f8'; # COPY AND PASTE
-$secret  = '6ec34840390de9b86d7dd88ae33066f1'; # COPY AND PASTE
-$facebook = new Facebook($api_key, $secret);
+$facebook = new Facebook($api_key, $secret_key);
 $user = $facebook->require_login();
 
 if(!($vote = @$_GET['vote'])) {
@@ -20,12 +19,11 @@ title="Autumn Leaves" album="Autumn Leaves" artist="Human or Robot?" />
 
 <?php
 } else {
-    $user_info = $facebook->api_client->users_getStandardInfo($user, 
-      array('first_name', 'last_name', 'sex', 'birthday', 'current_location'));
-    $info = $user_info[0];
-    $birth_year = isset($info['birthday']) ? 
+    $info = reset($facebook->api_client->users_getStandardInfo($user, 
+     array('first_name', 'last_name', 'sex', 'birthday', 'current_location')));
+    $info['birth_year'] = isset($info['birthday']) ? 
      date("Y", strptime($info['birthday'], "%m %d, %Y")) : '';
-    $city =  isset($info['current_location']) ? 
+    $info['city'] =  isset($info['current_location']) ? 
      $info['current_location']['city'] : '';
 
     $data_file = "/tmp/fb_survey.txt";
@@ -33,8 +31,8 @@ title="Autumn Leaves" album="Autumn Leaves" artist="Human or Robot?" />
     $text .= "|" . $vote . "| ";
     $text .= "|" . $info['first_name'] ." ". $info['last_name'] ."| ";
     $text .= "|" . $info['sex'] . "| ";
-    $text .= "|" . $birth_year . "| ";
-    $text .= "|" . $city . "|";
+    $text .= "|" . $info['birth_year'] . "| ";
+    $text .= "|" . $info['city'] . "|";
     $file = fopen($data_file, "a");
     fwrite($file, $text ."\n");
     fclose($file);

@@ -22,13 +22,15 @@ if(!($vote = @$_GET['vote'])) {
 
 <?php
 } else {
-    $data_file = "/tmp/survey.txt";
+    $info = $_GET;
+    
+    $data_file = "/tmp/fb_survey.txt";
     $text  = "|" . date("Y.m.d H:i:s") . "| ";
     $text .= "|" . $vote . "| ";
-    $text .= "|" . $_GET['first_name'] ." ". $_GET['last_name'] ."| ";
-    $text .= "|" . $_GET['sex'] . "| ";
-    $text .= "|" . $_GET['birth_year'] . "| ";
-    $text .= "|" . $_GET['city'] . "|";
+    $text .= "|" . $info['first_name'] ." ". $info['last_name'] ."| ";
+    $text .= "|" . $info['sex'] . "| ";
+    $text .= "|" . $info['birth_year'] . "| ";
+    $text .= "|" . $info['city'] . "|";
     $file = fopen($data_file, "a");
     fwrite($file, $text ."\n");
     fclose($file);
