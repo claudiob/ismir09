@@ -97,8 +97,8 @@
       <li>the genres of the songs on which to run the programme.</li>
     </ol>
     <p>For instance, if you just type:</p>
-    <pre><span class="shell">$</span> python c/jamendo_2.py 30 rock jazz country blues</pre>
-    <p>you can compare the performance of the isRock programme on sets of 30 random songs from each of the following genres: Rock, Jazz, Country, Blues.</p>
+    <pre><span class="shell">$</span> python c/jamendo_2.py 30 rock jazz country rnb</pre>
+    <p>you can compare the performance of the isRock programme on sets of 30 random songs from each of the following genres: Rock, Jazz, Country, R'n'B.</p>
     <p>Running this programme, it becomes clear that the genre recogniser software I have written is not working! It was just a fake, so luckily MIREX competitions will live on for a couple more years. In fact the result is that the software I have written classifies <span class="note">[change with correct results]</span> half of the Jazz tracks as rock or half of the Rock tracks as non-Rock.</p>
 
     <h2>1.6 What we have learnt</h2>
@@ -138,7 +138,7 @@
     <pre>require 'rexml/document'</pre>
     <pre>require 'c/lyricsfly_key'</pre>
     <p>These include the necessary libraries to access Web pages and parse XML files and the API key. Then write:</p>
-    <pre>url = "http://lyricsfly.com/api/api.php?a=Rihanna&amp;t=Umbrella&amp;i=#{$api_key}"</pre>
+    <pre>url = "http://lyricsfly.com/api/api.php?a=Rihanna&amp;t=Umbrella&amp;i=#{$lyricsfly_key}"</pre>
     <pre>result = Net::HTTP.get_response(URI.parse(url))</pre>
     <p>which prepares in a string the URL querying about the lyrics of Umbrella (Rihanna) and retrieves the result. The lyrics are returned inside an XML file, contained between the <code>&lt;tx&gt;</code>…<code>&lt;/tx&gt;</code> tags. To extract and print them, just type:</p>
     <pre>response = REXML::Document.new(result.body).elements['//tx']</pre>
