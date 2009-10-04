@@ -216,11 +216,11 @@
     <pre>song_id = REXML::Document.new(result.body).elements['//track'].attributes['id']</pre>
     <p>Finally, we ask the Echo Nest to return the tempo of the song, submitting the <i>get_tempo</i> query as follows:</p>
     <pre>url =  "http://developer.echonest.com/api/get_tempo"</pre>
-    <pre>url += "?api_key=#{api_key}&amp;id=#{song_id}&amp;version=3"</pre>
+    <pre>url += "?api_key=#{$echonest_key}&amp;id=#{song_id}&amp;version=3"</pre>
     <pre>result = Net::HTTP.get_response(URI.parse(url))</pre>
     <p>The result is an XML file which contains the tempo value between the tags <code>&lt;tempo&gt;</code>. We extract and print the value as follows:</p>
     <pre>tempo = REXML::Document.new(result.body).elements['//tempo'].text</pre>
-    <pre>puts tempo</pre>
+    <pre>puts "The estimated tempo is #{tempo} BPM"</pre>
     <p>Finally we can type</p>
     <pre>exit</pre>
     <p>to leave the ruby interpreter. The entire source code is in the folder <b>c/</b> in the file <b>echonest_1.rb</b>. To run it again, just type:</p>
@@ -334,5 +334,6 @@
     <h2>4.6 What we have learnt</h2>
     <p>We have learnt how rapidly you can create and deploy applications on Facebook.</p>
     <p>We have described only one the benefits of integrating an application in a social network, that is, pulling personal data. However there are many more features, like sharing application among friends, navigating the user's network of friends, making the application available for multiple devices, collect musical preferences over time, and so on.</p>
+    <p>Reference to herd-it</p>
   </body>
 </html>

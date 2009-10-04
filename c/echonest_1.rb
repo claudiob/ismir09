@@ -14,4 +14,4 @@ url += "?api_key=#{$echonest_key}&id=#{song_id}&version=3"
 result = Net::HTTP.get_response(URI.parse(url))
 
 tempo = REXML::Document.new(result.body).elements['//tempo'].text
-puts tempo
+puts "The estimated tempo is #{tempo} BPM"

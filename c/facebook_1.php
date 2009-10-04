@@ -1,7 +1,7 @@
 <?php
 if(!($vote = @$_GET['vote'])) {
 ?>
-<object type="application/x-shockwave-flash" data="mp3player.swf?autoplay=true&amp;song_url=http://ismir2009.benfields.net/m/saxex.mp3">
+<object type="application/x-shockwave-flash" data="mp3player.swf?autoplay=true&amp;song_url=http://ismir2009.benfields.net/m/saxex.mp3" height="30">
  <param name="movie" value="mp3player.swf?autoplay=true&amp;song_url=http://ismir2009.benfields.net/m/saxex.mp3" />
 </object>
 
