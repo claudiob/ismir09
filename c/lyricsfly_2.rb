@@ -9,7 +9,7 @@ def get_lyrics(artist_and_title)
   result = Net::HTTP.get_response(URI.parse(url))
   
   response = REXML::Document.new(result.body).elements['//tx']
-  response.text.gsub("[br]", "") unless response.nil?
+  response.text.gsub("[br]", "\n") unless response.nil?
 end
 
 puts get_lyrics(ARGV)
