@@ -47,13 +47,13 @@
 
     <h2>1.1 The traditional way, evaluating on a few, local examples</h2>
     <p>But first, let's see this fantasy software that would win any MIREX contest and correctly predict the genre of a song. It is located in the folder <b>c/</b> and named <b>isrock.py</b>; what it does is to distinguish songs between "Rock" and "non Rock" in a few seconds. For instance, you can run this programme on a few sample MP3 files that are located in the <b>m/</b> folder and watch its results. Type:</p>
-    <pre><span class="shell">$</span> cd &lt;package path&gt;</pre>
-    <pre><span class="shell">$</span> python c/isrock.py m/rock.mp3</pre>
+    <pre><span class="shell">$</span> cd &lt;package path&gt;/c</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/rock.mp3</pre>
     <p>to run it on a rock song (El Chorrillo, Bill Foreman), and you will see the output is <code>True</code>. Similarly:</p>
-    <pre><span class="shell">$</span> python c/isrock.py m/metal.mp3</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/metal.mp3</pre>
     <p>returns <code>True</code> for a metal track (Suicidi0, VZer0). On the other hand, running the programme on a vocal (Effortless, Allison Crowe) and experimental jazz (Germanium, dK) track return <code>False</code>:</p>
-    <pre><span class="shell">$</span> python c/isrock.py m/vocal.mp3</pre>
-    <pre><span class="shell">$</span> python c/isrock.py m/experimental.mp3</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/vocal.mp3</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/experimental.mp3</pre>
     <p>So far, the programme has a precision of 100%, but is this the ultimate genre recogniser, or just pure coincidence? The answer can be obtained by running the programme again on a much larger data set of tracks, already categorised as either "Rock" or "non Rock".</p>
 
     <h2>1.2 The new way, getting examples from the Web</h2>
@@ -86,7 +86,7 @@
     <p>The result corresponds to the precision of the genre recognition algorithm, evaluated on this set of 50 Rock songs. Now you can quit the python interpreter by writing</p>
     <pre>exit()</pre>
     <p>You do not need to save the script, since it is already included in the folder <b>c/</b> of your package, under the name <b>jamendo_1.py</b>. You can simply type:</p>
-    <pre><span class="shell">$</span> python c/jamendo_1.py</pre>
+    <pre><span class="shell">$</span> python jamendo_1.py</pre>
     <p>to run it again on a different set of 50 random Rock songs.</p>
 
     <h2>1.5 Expanding the script</h2>
@@ -97,7 +97,7 @@
       <li>the genres of the songs on which to run the programme.</li>
     </ol>
     <p>For instance, if you just type:</p>
-    <pre><span class="shell">$</span> python c/jamendo_2.py 30 rock jazz country rnb</pre>
+    <pre><span class="shell">$</span> python jamendo_2.py 30 rock jazz country rnb</pre>
     <p>you can compare the performance of the isRock programme on sets of 30 random songs from each of the following genres: Rock, Jazz, Country, R'n'B.</p>
     <p>Running this programme, it becomes clear that the genre recogniser software I have written is not working! It was just a fake, so luckily MIREX competitions will live on for a couple more years. In fact the result is that the software I have written classifies <span class="note">[change with correct results]</span> half of the Jazz tracks as rock or half of the Rock tracks as non-Rock.</p>
 
@@ -130,13 +130,13 @@
 
     <h2>2.2 A ruby script to retrieve lyrics</h2>
     <p>Now that we know how to retriever lyrics using LyricsFly API, let's write a short snippet of code to do this automatically for every song of our interest. The first thing we need to do is to store the <b>API key</b> in a local file, so if you do not have a proper LyricsFly API key, just copy and paste the temporary one from the Web site, then run the following command:</p>
-    <pre><span class="shell">$</span> echo '$lyricsfly_key = "PASTE YOUR KEY HERE"' &gt; c/lyricsfly_key.rb</pre>
+    <pre><span class="shell">$</span> echo '$lyricsfly_key = "PASTE YOUR KEY HERE"' &gt; lyricsfly_key.rb</pre>
     <p>Then run the following command:</p>
     <pre><span class="shell">$</span> irb</pre>
     <p>which launches the interpreter of a different language that we are going to use for this example, called <b>ruby</b>. At this point write the following lines:</p>
     <pre>require 'net/http'</pre>
     <pre>require 'rexml/document'</pre>
-    <pre>require 'c/lyricsfly_key'</pre>
+    <pre>require 'lyricsfly_key'</pre>
     <p>These include the necessary libraries to access Web pages and parse XML files and the API key. Then write:</p>
     <pre>url = "http://lyricsfly.com/api/api.php?a=Rihanna&amp;t=Umbrella&amp;i=#{$lyricsfly_key}"</pre>
     <pre>result = Net::HTTP.get_response(URI.parse(url))</pre>
@@ -146,9 +146,9 @@
     <p>Finally type:</p>
     <pre>exit</pre>
     <p>to close the ruby interpreter. The code we have written is already included in the folder <b>c/</b> under the name <b>lyricsfly_1.rb</b>. You can run it again by typing:</p>
-    <pre><span class="shell">$</span> ruby c/lyricsfly_1.rb</pre>
+    <pre><span class="shell">$</span> ruby lyricsfly_1.rb</pre>
     <p>Similarly to the previous example, I have prepared a more advanced version of this script in the folder <b>c/</b> called <b>lyricsfly_2.rb</b>. To retrieve any lyrics of your choice, run this programme in the command line, followed by the artist name and song title, such as:</p>
-    <pre><span class="shell">$</span> ruby c/lyricsfly_2.rb "John Lennon" Imagine</pre>
+    <pre><span class="shell">$</span> ruby lyricsfly_2.rb "John Lennon" Imagine</pre>
     <p>This programme also makes sure to correctly visualise "strange" characters in the lyrics and to remove the "[br]" that are present at the end of each line.</p>
 
     <h2>2.3 Mashing up Lyricsfly and Last.fm APIs</h2>
@@ -173,7 +173,7 @@
       <li>Finally, the last part of the code reads a series of genres from the command-line and, for each genre, first retrieves songs from Last.fm, then retrieves their lyric from LyricsFly, then counts the average number of question marks.</li>
     </ul>
     <p>To run this programme, type:</p>
-    <pre><span class="shell">$</span> ruby c/lyricsfly_3.rb country hip-hop</pre>
+    <pre><span class="shell">$</span> ruby lyricsfly_3.rb country hip-hop</pre>
     <p>to compare the average number of question marks in Country and Hip-hop songs. The result is <span class="note">[watch the result]</span> which confirms the experiments presented in the paper, highlighting how Hip Hop songs have in average far more question marks than Country songs.</p>
 
     <h2>2.6 What we have learnt</h2>
@@ -205,7 +205,7 @@
     <p>Then start by writing the following lines:</p>
     <pre>require 'net/http'</pre>
     <pre>require 'rexml/document'</pre>
-    <pre>require 'c/echonest_key'</pre>
+    <pre>require 'echonest_key'</pre>
     <p>to include the libraries to open Web pages and parse XML documents and the Echo Nest API key. Then write:</p>
     <pre>song = 'http://ismir2009.benfields.net/m/120bpm.mp3'</pre>
     <pre>url= "http://developer.echonest.com/api/upload"</pre>
@@ -224,11 +224,11 @@
     <p>Finally we can type</p>
     <pre>exit</pre>
     <p>to leave the ruby interpreter. The entire source code is in the folder <b>c/</b> in the file <b>echonest_1.rb</b>. To run it again, just type:</p>
-    <pre><span class="shell">$</span> ruby c/echonest_1.rb</pre>
+    <pre><span class="shell">$</span> ruby echonest_1.rb</pre>
 
     <h2>3.2 Audio analysis of any song</h2>
     <p>If you are not just interested in the <b>tempo</b> but also in other features, you can check the source code of <b>echonest_2.rb</b> which is different from <b>echonest_1.rb</b> in that you can specify on the command line which track to analyse, and obtain tempo, mode, key and time signature. For instance, type:</p>
-    <pre><span class="shell">$</span> ruby c/echonest_2.rb http://ismir2009.benfields.net/m/120bpm.mp3</pre>
+    <pre><span class="shell">$</span> ruby echonest_2.rb http://ismir2009.benfields.net/m/120bpm.mp3</pre>
     <p>to analyse the same file as before. The result has to be interpreted as follows:</p>
     <ul>
       <li>mode = 1 corresponds to Major</li>
@@ -237,7 +237,7 @@
       <li>key = 5 corresponds to E (see <a href="http://developer.echonest.com/forums/thread/9">http://developer.echonest.com/forums/thread/9</a> for more details).</li>
     </ul>
     <p>Running the same programme on a different MP3 file will return different results, for instance:</p>
-    <pre><span class="shell">$</span> ruby c/echonest_2.rb http://ismir2009.benfields.net/m/vocal.mp3</pre>
+    <pre><span class="shell">$</span> ruby echonest_2.rb http://ismir2009.benfields.net/m/vocal.mp3</pre>
 
     <h2>3.3 Are "sad" songs in minor mode and "happy" songs in major mode?</h2>
     <p>Now that we have seen how to analyse audio files by means of the Echo Nest API, we are going to create a <b>mash-up</b> to combine the Echo Nest analyser with lists of songs provided by Jamendo. Our goal will be to evaluate the following preposition: "Most sad songs are in minor mode, most happy songs are in major mode".</p>
@@ -253,7 +253,7 @@
       <li>The last part combines it all together: for each mood (happy/sad) a list of songs is retrieved from Jamendo, then analysed through the Echo Nest and their mode distribution written to the output.</li>
     </ul>
     <p>To launch the programme, write:</p>
-    <pre><span class="shell">$</span> ruby c/echonest_3.rb sad happy</pre>
+    <pre><span class="shell">$</span> ruby echonest_3.rb sad happy</pre>
     <p>This may take some time to run, given the number of songs we are requesting, but in the end it returns the result. As we can see, on 5 random sad and happy songs, the results are <span class="note">[check the results]</span>. Repeating the experiment with more songs can serve as a proper evaluation of the hypothesis. Just be sure not to submit <b>too many queries</b> to the same API in a short period of time, since you may get blocked depending on the policy of the site.</p>
 
     <h2>3.4 What we have learnt</h2>
