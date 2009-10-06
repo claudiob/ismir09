@@ -7,14 +7,34 @@ from lastfm_key import lastfm_key
 def recommend_artist(username):
     network = pylast.get_lastfm_network(api_key = lastfm_key)
     user = network.get_user(username)
-    known = get_known_artists(user, 1, int(time()))
+    known_artists = get_known_artists(user, 1, int(time()))
     
-    friends = user.get_friends()[:50]
+    friends = user.get_friends()[:10]
     print "[%s has %d friends]" % (username, len(friends))
-    hottest = get_hottest_artists(friends)
+
+    now = int(time())
+    sec_in_month = 604800*4
+    prev_artists = get_friends_artists(friends, now-sec_in_month*2, now-sec_in_month)
+    next_artists = get_friends_artists(friends, now-sec_in_month, now)
     
-    recommended = [artist for artist in hottest if artist not in known][:3]
-    print "%s should listen to %s" % (username, recommended)
+    prev_values = sum(prev_artists.values(), [])
+    next_values = sum(next_artists.values(), [])
+    both_artists = {}
+    for artist in prev_values:
+        both_artists[artist] = float(next_values.count(artist))/prev_values.count(artist) - 1
+    
+    hottest_artists = both_artists.keys()
+    hottest_artists.sort(reverse = True, cmp = \
+        lambda x,y: cmp(both_artists[x], both_artists[y]))
+    print "[%d friends know %d artists]" % (len(friends), len(hottest_artists))
+    
+    recommended = [artist for artist in hottest_artists if artist not in known_artists][0]
+    
+    prev_listeners = [friend for friend, artists in prev_artists.items() if recommended in artists]
+    next_listeners = list(set([friend for friend, artists in next_artists.items() if recommended in artists]) - set(prev_listeners))
+    print "%s should listen to %s since" % (username, recommended)
+    print "%s already listened to %s" % (prev_listeners, recommended)
+    print "%s started listening to %s this month" % (next_listeners, recommended)
 
 
 def get_known_artists(user, from_time='', to_time=''):
@@ -22,31 +42,11 @@ def get_known_artists(user, from_time='', to_time=''):
     return [item.item for item in charts]
 
 
-def get_hottest_artists(friends):
-    now = int(time())
-    sec_in_week = 604800
-    prev_artists = get_friends_artists(friends, now-sec_in_week*2, now-sec_in_week)
-    next_artists = get_friends_artists(friends, now-sec_in_week, now)
-    
-    both_artists = {}
-    for artist, count in prev_artists.items():
-        if next_artists.has_key(artist):
-            both_artists[artist] = float(next_artists[artist])/count-1
-    
-    sorted_artists = both_artists.keys()
-    sorted_artists.sort(reverse = True, cmp = \
-        lambda x,y: cmp(both_artists[x], both_artists[y]))
-    print "[%d friends know %d artists]" % (len(friends), len(sorted_artists))
-    return sorted_artists
-
-
 def get_friends_artists(friends, from_time, to_time):
-    known_artists = [get_known_artists(friend, from_time, to_time) for friend in friends]
-    known_artists = sum(known_artists, []) # flatten
     friends_artists  = {}
-    for i in set(known_artists):
-        friends_artists[i] = known_artists.count(i)
-    print "[Read list of friends' weekly artists]"  
+    for friend in friends:
+        friends_artists[friend] = get_known_artists(friend, from_time, to_time)
+    print "[Read list of friends' monthly artists]"  
     return friends_artists
     
 
