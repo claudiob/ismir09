@@ -1,0 +1,377 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="800" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Created by igraph -->
+
+<defs>
+  <symbol id="Triangle" overflow="visible">
+    <path d="M 0 0 L 10 -5 L 10 5 z"/>
+  </symbol>
+  <style type="text/css">
+    <![CDATA[
+#vertices circle { stroke: black; stroke-width: 1 }
+#vertices rect { stroke: black; stroke-width: 1 }
+#vertices text { text-anchor: middle; font-size: 16px; font-family: sans-serif; font-weight: normal }
+#edges line { stroke-width: 1 }
+    ]]>
+  </style>
+</defs>
+
+<g transform="translate(400.0000,300.0000)">
+  <g id="edges">
+  <!-- Edges -->
+    <g transform="translate(-350.7809,59.7634)" fill="black" stroke="black">
+      <line x1="351.1239" y1="-61.3368" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(350.0912)"/>
+    </g>
+
+    <g transform="translate(-99.7082,240.9742)" fill="black" stroke="black">
+      <line x1="100.0512" y1="-242.5475" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(292.4162)"/>
+    </g>
+
+    <g transform="translate(-45.7620,103.6942)" fill="black" stroke="black">
+      <line x1="46.1050" y1="-105.2676" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(293.6524)"/>
+    </g>
+
+    <g transform="translate(14.1312,183.1038)" fill="black" stroke="black">
+      <line x1="-13.7882" y1="-184.6772" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(265.7302)"/>
+    </g>
+
+    <g transform="translate(230.3859,-105.7408)" fill="black" stroke="black">
+      <line x1="-230.0429" y1="104.1675" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(155.6381)"/>
+    </g>
+
+    <g transform="translate(-209.1067,-25.0381)" fill="black" stroke="black">
+      <line x1="209.4498" y1="23.4647" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(6.3922)"/>
+    </g>
+
+    <g transform="translate(123.2692,137.1024)" fill="black" stroke="black">
+      <line x1="-122.9261" y1="-138.6758" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(228.4453)"/>
+    </g>
+
+    <g transform="translate(-204.6644,57.1850)" fill="black" stroke="black">
+      <line x1="205.0074" y1="-58.7584" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(344.0069)"/>
+    </g>
+
+    <g transform="translate(198.7829,-210.2916)" fill="black" stroke="black">
+      <line x1="-198.4399" y1="208.7183" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(133.5539)"/>
+    </g>
+
+    <g transform="translate(-260.1034,-185.7425)" fill="black" stroke="black">
+      <line x1="260.4464" y1="184.1692" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(35.2652)"/>
+    </g>
+
+    <g transform="translate(-184.4734,-229.7878)" fill="black" stroke="black">
+      <line x1="184.8165" y1="228.2144" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(50.9982)"/>
+    </g>
+
+    <g transform="translate(126.8273,-245.5152)" fill="black" stroke="black">
+      <line x1="-126.4843" y1="243.9419" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(117.4068)"/>
+    </g>
+
+    <g transform="translate(177.1421,222.6740)" fill="black" stroke="black">
+      <line x1="-176.7990" y1="-224.2473" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(231.7474)"/>
+    </g>
+
+    <g transform="translate(108.1890,-95.3021)" fill="black" stroke="black">
+      <line x1="-107.8460" y1="93.7288" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(139.0062)"/>
+    </g>
+
+    <g transform="translate(-269.8339,176.2706)" fill="black" stroke="black">
+      <line x1="270.1769" y1="-177.8440" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(326.6451)"/>
+    </g>
+
+    <g transform="translate(-204.1881,-113.1489)" fill="black" stroke="black">
+      <line x1="204.5312" y1="111.5756" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(28.6133)"/>
+    </g>
+
+    <g transform="translate(30.6464,-259.0395)" fill="black" stroke="black">
+      <line x1="-30.3033" y1="257.4662" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(96.7127)"/>
+    </g>
+
+    <g transform="translate(-360.0000,-1.9923)" fill="black" stroke="black">
+      <line x1="360.3430" y1="0.4189" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(0.0666)"/>
+    </g>
+
+    <g transform="translate(-163.5821,144.7118)" fill="black" stroke="black">
+      <line x1="163.9252" y1="-146.2851" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(318.2546)"/>
+    </g>
+
+    <g transform="translate(-66.3944,-260.6323)" fill="black" stroke="black">
+      <line x1="66.7374" y1="259.0590" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(75.5539)"/>
+    </g>
+
+    <g transform="translate(-349.8443,-63.9973)" fill="black" stroke="black">
+      <line x1="350.1873" y1="62.4240" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(10.1073)"/>
+    </g>
+
+    <g transform="translate(344.0170,87.6719)" fill="black" stroke="black">
+      <line x1="-343.6740" y1="-89.2453" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(194.5570)"/>
+    </g>
+
+    <g transform="translate(360.1217,-41.4489)" fill="black" stroke="black">
+      <line x1="-359.7787" y1="39.8756" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(173.6755)"/>
+    </g>
+
+    <g transform="translate(286.1645,130.6438)" fill="black" stroke="black">
+      <line x1="-285.8214" y1="-132.2171" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(204.8246)"/>
+    </g>
+
+    <g transform="translate(-96.4096,-196.6789)" fill="black" stroke="black">
+      <line x1="96.7527" y1="195.1056" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(63.6232)"/>
+    </g>
+
+    <g transform="translate(169.1191,59.4213)" fill="black" stroke="black">
+      <line x1="-168.7761" y1="-60.9946" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(199.8695)"/>
+    </g>
+
+    <g transform="translate(51.2410,-175.8169)" fill="black" stroke="black">
+      <line x1="-50.8980" y1="174.2436" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(106.2835)"/>
+    </g>
+
+    <g transform="translate(255.0758,186.6115)" fill="black" stroke="black">
+      <line x1="-254.7328" y1="-188.1848" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(216.4553)"/>
+    </g>
+
+    <g transform="translate(234.4954,-9.8978)" fill="black" stroke="black">
+      <line x1="-234.1524" y1="8.3245" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(177.9639)"/>
+    </g>
+
+    <g transform="translate(359.3853,25.2517)" fill="black" stroke="black">
+      <line x1="-359.0422" y1="-26.8251" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(184.2728)"/>
+    </g>
+
+    <g transform="translate(-322.5387,-126.9331)" fill="black" stroke="black">
+      <line x1="322.8817" y1="125.3597" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(21.2188)"/>
+    </g>
+
+    <g transform="translate(92.7181,249.0334)" fill="black" stroke="black">
+      <line x1="-92.3750" y1="-250.6067" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(249.7658)"/>
+    </g>
+
+    <g transform="translate(-186.8507,223.5495)" fill="black" stroke="black">
+      <line x1="187.1938" y1="-225.1228" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(309.7441)"/>
+    </g>
+
+    <g transform="translate(338.3217,-109.2890)" fill="black" stroke="black">
+      <line x1="-337.9786" y1="107.7157" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(162.3226)"/>
+    </g>
+
+    <g transform="translate(-10.4480,260.0170)" fill="black" stroke="black">
+      <line x1="10.7910" y1="-261.5903" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(272.3622)"/>
+    </g>
+
+    <g transform="translate(276.4825,-176.9333)" fill="black" stroke="black">
+      <line x1="-276.1395" y1="175.3600" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(147.5828)"/>
+    </g>
+
+    <g transform="translate(-65.9795,-105.0459)" fill="black" stroke="black">
+      <line x1="66.3225" y1="103.4726" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(57.3415)"/>
+    </g>
+
+    <g transform="translate(-318.7380,119.3457)" fill="black" stroke="black">
+      <line x1="319.0810" y1="-120.9191" x2="0" y2="0"/>
+      <use x="0" y="0" xlink:href="#Triangle" transform="rotate(339.2453)"/>
+    </g>
+
+  </g>
+
+  <g id="vertices">
+  <!-- Vertices -->
+    <g transform="translate(0.3430 -1.5733)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">bfields</text>
+    </g>
+    <g transform="translate(-370.4825 63.2051)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Midik</text>
+    </g>
+    <g transform="translate(-107.3348 259.4630)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">loxy_</text>
+    </g>
+    <g transform="translate(-53.7857 122.0142)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Forss</text>
+    </g>
+    <g transform="translate(15.6203 203.0483)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">gremlinz</text>
+    </g>
+    <g transform="translate(248.6051 -113.9908)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Stunna</text>
+    </g>
+    <g transform="translate(-228.9824 -27.2647)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Cause4Concern Recordings</text>
+    </g>
+    <g transform="translate(136.5359 152.0689)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">TheBulgarian</text>
+    </g>
+    <g transform="translate(-223.8903 62.6955)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Tigerbeat6</text>
+    </g>
+    <g transform="translate(212.5636 -224.7862)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Dogs On Acid</text>
+    </g>
+    <g transform="translate(-276.4332 -197.2897)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Metalheadz</text>
+    </g>
+    <g transform="translate(-197.0603 -245.3303)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">hypem</text>
+    </g>
+    <g transform="translate(136.0334 -263.2704)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">DYLANFREAK</text>
+    </g>
+    <g transform="translate(189.5247 238.3798)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">cybercrunkrec</text>
+    </g>
+    <g transform="translate(123.2846 -108.4216)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">claws</text>
+    </g>
+    <g transform="translate(-286.5395 187.2671)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Breakwhore</text>
+    </g>
+    <g transform="translate(-221.7456 -122.7268)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Renegade Hardware</text>
+    </g>
+    <g transform="translate(32.9842 -278.9024)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">mcld</text>
+    </g>
+    <g transform="translate(-380.0000 -2.0155)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Barcode Recordings</text>
+    </g>
+    <g transform="translate(-178.5043 158.0282)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Trouble &amp; Bass</text>
+    </g>
+    <g transform="translate(-71.3837 -280.0000)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Nicolas Fournier</text>
+    </g>
+    <g transform="translate(-369.5339 -67.5072)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">atl</text>
+    </g>
+    <g transform="translate(363.3749 92.6988)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">plamere</text>
+    </g>
+    <g transform="translate(380.0000 -43.6521)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Ms. Maura</text>
+    </g>
+    <g transform="translate(304.3164 139.0406)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">eye-d</text>
+    </g>
+    <g transform="translate(-105.2951 -214.5967)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">claudiob</text>
+    </g>
+    <g transform="translate(187.9285 66.2189)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">High Rankin</text>
+    </g>
+    <g transform="translate(56.8488 -195.0147)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">UnknownError</text>
+    </g>
+    <g transform="translate(271.1622 198.4954)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">dj api</text>
+    </g>
+    <g transform="translate(254.4828 -10.6084)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">SALVA</text>
+    </g>
+    <g transform="translate(379.3297 26.7418)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">EvolIntent</text>
+    </g>
+    <g transform="translate(-341.1827 -134.1717)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">TheSixMillionDollarKid</text>
+    </g>
+    <g transform="translate(99.6352 267.7991)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">violencerecordings</text>
+    </g>
+    <g transform="translate(-199.6379 238.9276)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">EdRush</text>
+    </g>
+    <g transform="translate(357.3773 -115.3621)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">spoonfight</text>
+    </g>
+    <g transform="translate(-11.2723 280.0000)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">kurtjx</text>
+    </g>
+    <g transform="translate(293.3658 -187.6550)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Contaminated</text>
+    </g>
+    <g transform="translate(-76.7721 -121.8839)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">Habit Recordings</text>
+    </g>
+    <g transform="translate(-337.4401 126.4331)">
+      <circle cx="0" cy="0" r="20" fill="red"/>
+      <text x="0" y="5">analog sisters</text>
+    </g>
+  </g>
+</g>
+
+</svg>
