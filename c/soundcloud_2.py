@@ -1,7 +1,14 @@
 import sys
 import scapi
 import igraph
-from soundcloud_oauth import init_scope
+from soundcloud_key import soundcloud_key, soundcloud_secret, API_HOST
+
+def init_scope():
+    soundcloud_token = "nvFKBw83bTfDjIFPiRCxGw" # Already retrieved
+    soundcloud_token_secret = "BNGdRSiimWgxrfPDmWkHza1roy77EwQ1mvT8JoeE"
+    return scapi.Scope(scapi.ApiConnector(API_HOST, authenticator = \
+        scapi.authentication.OAuthAuthenticator(soundcloud_key, \
+        soundcloud_secret, soundcloud_token, soundcloud_token_secret)))
 
 def populate(root, graph, user, levels):
     graph.add_vertices(1)

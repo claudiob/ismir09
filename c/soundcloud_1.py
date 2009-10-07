@@ -1,12 +1,6 @@
 import webbrowser
 import scapi
-
-# The host and keys to authenticate application with Soundcloud 
-from soundcloud_key import soundcloud_key, soundcloud_secret
-API_HOST = "api.soundcloud.com"
-scapi.REQUEST_TOKEN_URL = "http://%s/oauth/request_token" % API_HOST
-scapi.ACCESS_TOKEN_URL  = "http://%s/oauth/access_token"  % API_HOST
-scapi.AUTHORIZATION_URL = "http://%s/oauth/authorize"     % API_HOST
+from soundcloud_key import soundcloud_key, soundcloud_secret, API_HOST
 
 def init_scope():
     # The first authenticator to get a request-token
