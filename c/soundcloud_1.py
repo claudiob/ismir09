@@ -1,31 +1,48 @@
-import sys
+import webbrowser
 import scapi
-import igraph
-from soundcloud_oauth import init_scope
 
-def populate(root, graph, user, levels):
-    graph.add_vertices(1)
-    idx = graph.vcount() - 1
-    user = root.users(user)
-    graph.vs[idx]['name'] = user.username
-    print "created vertix %d for %s" % (idx, user.username)
+# The host and keys to authenticate application with Soundcloud 
+from soundcloud_key import soundcloud_key, soundcloud_secret
+API_HOST = "api.soundcloud.com"
+scapi.REQUEST_TOKEN_URL = "http://%s/oauth/request_token" % API_HOST
+scapi.ACCESS_TOKEN_URL  = "http://%s/oauth/access_token"  % API_HOST
+scapi.AUTHORIZATION_URL = "http://%s/oauth/authorize"     % API_HOST
+
+def init_scope():
+    # The first authenticator to get a request-token
+    authenticator = scapi.authentication.OAuthAuthenticator(soundcloud_key, \
+        soundcloud_secret, None, None)
+        
+    # The first connector to create and sign the requests
+    connector = scapi.ApiConnector(host=API_HOST, authenticator=authenticator)
+    token, secret = connector.fetch_request_token()
     
-    if levels > 1:
-        followingUsers = list(user.followings()) # only first page
-        for following in followingUsers:
-            try:
-                next_idx = [v['name'] for v in graph.vs].index(following['username'])
-            except ValueError:
-                next_idx = populate(root, graph, following['id'], levels-1)
-            graph.add_edges((idx, next_idx))
-    return idx
+    # Grant authorization for the request-token via browser confirmation
+    authorization_url = connector.get_request_token_authorization_url(token)
+    webbrowser.open(authorization_url)
+    oauth_verifier = raw_input("Enter verifier code as seen in the browser: ")
+    
+    # The second authenticator with the temp token/secret to get access-token
+    authenticator = scapi.authentication.OAuthAuthenticator(soundcloud_key, \
+        soundcloud_secret, token, secret)
+        
+    # The second connector with the new authenticator
+    connector = scapi.ApiConnector(API_HOST, authenticator=authenticator)
+    token, secret = connector.fetch_access_token(oauth_verifier)
+    
+    # The final authenticator with all four parameters OAuth requires
+    authenticator = scapi.authentication.OAuthAuthenticator(soundcloud_key, \
+        soundcloud_secret, token, secret)
+        
+    # The final connector returned in the root to query for resources
+    connector = scapi.ApiConnector(API_HOST, authenticator=authenticator)
+    root = scapi.Scope(connector)
+    
+    print "Authenticated as %s" % root.me().username
+    return root    
 
-def main(user, levels=2):
-    root = init_scope()
-    graph = igraph.Graph(n=0, directed=True)
-    populate(root, graph, user, levels) 
-    graph.write_svg("%s_%d.svg" % (user, levels), layout=graph.layout("kk"), \
-        labels="name", vertex_size=20, width=800, height=600)
-
-if __name__ == "__main__":
-    sys.exit(main(sys.argv[1], int(sys.argv[2])))
+root = init_scope()
+user = root.users("bfields")
+print "%s is following:" % user.username
+for friend in user.followings():
+    print "- %s [%s]" % (friend["username"], friend["permalink_url"])
