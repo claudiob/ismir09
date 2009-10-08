@@ -4,52 +4,45 @@ from time import time
 import pylast
 from lastfm_key import lastfm_key
 
-def recommend_artist(username):
-    # 1. Look for already known artists
-    network = pylast.get_lastfm_network(api_key = lastfm_key)
-    user = network.get_user(username)
+def trends_for(username):
+    api = pylast.get_lastfm_network(lastfm_key)
+    user = api.get_user(username)    
     known_artists = get_known_artists(user)
+    friends = user.get_friends()
+    print "Looking for trends among %s's %d friends" % (username, len(friends))
+    trends = get_trends(friends)
     
-    # 2. Retrieve list of friends
-    friends = user.get_friends()[:15]
-    print "[Analysing %d friends of %s]" % (username, len(friends))
+    for artist in trends.keys():
+        if artist in known_artists or trends[artist][1] == []:
+            del trends[artist]
+    trendy_artists = trends.keys()
+    trendy_artists.sort(key = lambda a: \
+        len(trends[a][0]) / float(len(trends[a][1]) + len(trends[a][0])))
+    print "Trendy artists for %s:" % username
+    for artist in trendy_artists[:3]:
+        print "%s, already known by %s, recently discovered by %s" % \
+            (artist, trends[artist][0], trends[artist][1])        
 
-    # 3. Look for artists listened by friends one month ago or this month
+def get_known_artists(user, when='always'):
     now = int(time())
-    sec_in_month = 60*60*24*30
-    
-    old_data = {} 
-    new_data = {}
-    for friend in friends:
-        old_data[friend] = get_known_artists(friend, now-sec_in_month*2, now-sec_in_month)
-        new_data[friend] = get_known_artists(friend, now-sec_in_month, now)
-
-    # 4. Identify artists unknown to user and check if they have become popular
-    old_artists = sum(old_data.values(), [])
-    new_artists = sum(new_data.values(), [])
-    unknown_artists = list(set(old_artists) & set(new_artists) - set(known_artists))
-    unknown_data = {}
-    for artist in unknown_artists:
-        unknown_data[artist] = float(new_artists.count(artist))/old_artists.count(artist)
-    
-    # 5. Sort unknown artists based on how more popular they have become 
-    unknown_artists.sort(reverse = True, cmp = lambda x,y: cmp(unknown_data[x], unknown_data[y]))
-
-    # 6. Recommend the first most trendy artists unknown to the user
-    print "%s should listen to:" % username
-    for recommend in unknown_artists[:3]:
-        old_listeners = [friend for friend, artists in old_data.items() if recommend in artists]
-        new_listeners = list(set([friend for friend, artists in new_data.items() if recommend in artists]) - set(old_listeners))
-        print "%s, already known by %s and recently discovered by %s." % (recommend, old_listeners, new_listeners)
-
-
-def get_known_artists(user, from_time=1, to_time=int(time())):
-    charts = user.get_weekly_artist_charts(from_time, to_time)
+    one_period = 60*60*24*30 # one month in seconds
+    periods = {'always': (1, now), 
+               'this_period': (now - one_period, now), 
+               'last_period': (now - one_period*2, now - one_period)}
+    charts = user.get_weekly_artist_charts(*periods[when])
     return [item.item for item in charts]
 
+def get_trends(friends):
+    trends = {} 
+    for friend in friends:
+        for artist in get_known_artists(friend, 'last_period'):
+            last_friends = trends.get(artist, [[]])[0]
+            trends[artist] = last_friends + [friend], []
+        for artist in get_known_artists(friend, 'this_period'):
+            if trends.has_key(artist) and friend not in trends[artist][0]:
+                trends[artist][1].append(friend)
+    return trends
 
 if __name__ == "__main__":
     username = sys.argv[1]
-    recommend_artist(username)
-
-    
+    trends_for(username)
