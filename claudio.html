@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en-gb" />
+    <meta name="language" content="en" /> 
+    <meta name="author" content="claudio@iiia.csic.es" />
+    <title>
+      Claudio's README
+    </title>
+<style type="text/css">
+    body {color: black; background-color: white;}
+    .note {color: red;}
+    .shell {color: orange;}
+    h1 {text-align: center; transform: capitalize; margin-top: 2em;}
+    h2 {color: #666;}
+</style>
+  </head>
+  <body>
+
+
+    <h1>0. Introduction</h1>
+    <p>Welcome to our tutorial.</p>
+    <p>The motivation is for you to understand that there is a great <b>benefit</b> in integrating <b>data and tools from the Web</b> with any kind of MIR that you might perform. This is a direction that we have seen in the last ISMIR, the number of articles dealing with data and tools coming from the Web is constantly increasing.</p>
+    <p>The goal of this tutorial is to give on overview both to those who are not familiar with Web mining techniques and to those who have already explored the Web for their research.</p>
+    <p>The Web can be seen as a large <b>collection of data and tools</b>:</p>
+    <ol>
+      <li>regarding data, Internet makes available for the first time an immense amount for anyone. If you work with <b>songs</b> for instance, and need to evaluate an algorithm on a large collection of songs, you can obtain millions from the Web. This approach might be better than working with <b>classical</b> <b>data sets</b> like RWC, which are smaller and static.</li>
+      <li>regarding tools, Internet makes available <b>analysis tools</b> that were once limited to expensive software such as Matlab packages.You can exploit the power of specific Web sites to calculate the tempo, beats, mode, key of a song, without requiring any software package, only a Web browser.</li>
+    </ol>
+    <p>Apart from data and tools, the Web is also the best place where to find millions of <b>social experiences</b>. People are becoming used to publish their lives on the Web: friends they have met, songs they have played, places they have visited, and personal data. People are more and more <b>contributing</b> to the Web, and this explains the success of communities such as Facebook that give anyone the power to be a provider for content and opinions. For researchers, Internet can be seen as <b>the largest evaluation test-bed</b> they can afford.</p>
+    <p>This tutorial will be <b>hands-on</b>, we will write and understand code together to discover the benefit of Web mining for practical, real-world MIR examples. A deep knowledge of programming languages is not necessary to understand the logic of the examples. All the code we are going to write is included in a package that you can download from our Web site. If you haven't download this archive yet, you can do it now from … <span class="note">[to be done]</span>.</p>
+    <p>The package contains the source codes in the folder <b>c/</b> and some sample MP3 files in the folder <b>m/</b>. Most source codes are presented in two version: a simple version and a more advanced and commented version that you can revise after the tutorial to understand what we have been doing <span class="note">[to be done]</span>. You are free to modify and reuse these pieces of code and to experiment with them for every purpose.</p>
+    <p>The examples are written in different programming languages. If you would like to code with us during this tutorial, you should have your computer equipped with at least Python and Ruby. These languages are available on any platform and are pre-installed in most Linux and OSX systems.</p>
+
+
+    <h1>1. Evaluating Hypothesis (Jamendo)</h1>
+    <p>Let's not waste more time, and start with the first example, so you can see how practical it can be to work with data from the Web. The first example will show how to integrate data from the Web to <b>evaluate research hypothesis</b>.</p>
+    <p>Imagine that I came to you and told you that I have finally programmed the ultimate <b>genre recognition</b> programme. I have written a software that, given any audio file, is able to immediately tell you which genre it belongs to. To convince you, I would run the programme on a few songs to demonstrate that it actually does what it is supposed to do. What would you do? Would you accept my hypothesis as confirmed?</p>
+    <p>I guess not. Most probably you would like to <b>evaluate</b> the hypothesis on a much larger number of songs. You would therefore have to prepare a large data set of songs of which you already knew the genre, and run the programme there, to actually measure its precision and recall. In principle, this is what should be done. But actually, this requires a lot of <b>time, effort and resources</b>:</p>
+    <ol>
+      <li>First you need to <b>collect songs</b>, which may mean digitalise them from different support or obtain them under a legal agreement.</li>
+      <li>Then you need to <b>categorise these songs</b>, assigning a genre label to each of them, so that you can test whether the genre recognition programme works fine</li>
+    </ol>
+    <p>All this process can be slow and cumbersome. This is exactly where the Web can come to a help. And we are going to see how.</p>
+
+    <h2>1.1 The traditional way, evaluating on a few, local examples</h2>
+    <p>But first, let's see this fantasy software that would win any MIREX contest and correctly predict the genre of a song. It is located in the folder <b>c/</b> and named <b>isrock.py</b>; what it does is to distinguish songs between "Rock" and "non Rock" in a few seconds. For instance, you can run this programme on a few sample MP3 files that are located in the <b>m/</b> folder and watch its results. Type:</p>
+    <pre><span class="shell">$</span> cd &lt;package path&gt;/c</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/rock.mp3</pre>
+    <p>to run it on a rock song (El Chorrillo, Bill Foreman), and you will see the output is <code>True</code>. Similarly:</p>
+    <pre><span class="shell">$</span> python isrock.py ../m/metal.mp3</pre>
+    <p>returns <code>True</code> for a metal track (Suicidi0, VZer0). On the other hand, running the programme on a vocal (Effortless, Allison Crowe) and experimental jazz (Germanium, dK) track return <code>False</code>:</p>
+    <pre><span class="shell">$</span> python isrock.py ../m/vocal.mp3</pre>
+    <pre><span class="shell">$</span> python isrock.py ../m/experimental.mp3</pre>
+    <p>So far, the programme has a precision of 100%, but is this the ultimate genre recogniser, or just pure coincidence? The answer can be obtained by running the programme again on a much larger data set of tracks, already categorised as either "Rock" or "non Rock".</p>
+
+    <h2>1.2 The new way, getting examples from the Web</h2>
+    <p>This is exactly where the Web comes to a help. In the Internet you can find millions of songs, <b>free to download</b> and already <b>categorised</b> according to different genres and tags. To evaluate the programme, we just need a <b>fast and practical way to retrieve</b> a large quantity of them. For the sake of this example, we will just focus on <b>one music-related Web site</b>, and get everything we need from there. This site is called <b>Jamendo</b>. There are many other sites that offer free, categorised music, but Jamendo has several advantages.</p>
+    <p>Navigate to <a href="http://jamendo.com">http://jamendo.com</a> and you will see that <q>artists allow anyone to share and download their music. It's free, legal and unlimited</q>. Jamendo is an interesting project allowing anyone to upload their songs and share them under permissive licenses that allow listeners to download them. This already solves legal issues, since researchers are legally entitled to work with songs taken from Jamendo.</p>
+    <p>Moreover, people uploading their tracks already assign them a genre; for instance, if you navigate to <a href="http://www.jamendo.com/en/track/43881">http://www.jamendo.com/en/track/43881</a> you will see a song tagged as <i>Rock</i>, which can be downloaded by just clicking on the <i>Download</i> button.</p>
+    <p>To evaluate our genre recognition programme we could simply browse this Web site and navigate from page to page clicking on Download until we have collected a sufficient number of Rock and non Rock songs. But clearly, this is neither fast nor practical. We want a more direct way to retrieve music. And indeed Jamendo offers an alternative, more practical way to access its catalogue: by means of a <b>Web API</b>.</p>
+
+    <h2>1.3 The advantage of a Web API</h2>
+    <p>A Web API is an interface that allows developers to retrieve data from a Web site without having to manually navigate through hundreds of pages or to deal with HTML code. Let's see what this means with an example. If you navigate to <a href="http://www.jamendo.com/en/albums">http://www.jamendo.com/en/albums</a> you will see the list of the 20 most popular albums in Jamendo this month. The list is surrounded by HTML code that is not relevant.</p>
+    <p>However, if we type in the URL of the browser <a href="http://api.jamendo.com/get2/name+artist_name/album/plain/?order=ratingmonth_desc">http://api.jamendo.com/get2/name+artist_name/album/plain/?order=ratingmonth_desc</a> we can get exactly the same information, but reduced to the bone, on one page, in plain text, much more easy to parse.</p>
+    <p>This is the power of Web APIs: rather than navigating to a proper page, you specify in the address the <b>query</b> that you want to submit to the server. In this case, we are querying for <i>name+artist_name</i> of any <i>album</i> in <i>plain</i> text format, ordered by decreasing popularity this month (<i>ratingmonth_desc</i>). We submit the query and get in return exactly the result of the query in the required format.</p>
+    <p>The full documentation of Jamendo API is at <a href="http://developer.jamendo.com">http://developer.jamendo.com</a> under <i>jamendo.get2 API ("The Free Music API")</i> . As the page states, the <q>API gives access to albums, artists, tracks, users, tags, playlists and reviews on Jamendo</q>. For instance the useful queries show you how to retrieve certain albums, tracks, playlists, cover images or list of friends.</p>
+    <p>Now, let's go back to our genre recogniser and to the reason why we are on Jamendo Web site. Our purpose is to collect a certain number of "Rock" and "non Rock" songs. Let's start retrieving a certain number of "Rock" songs at random, for instance 50. This corresponds to the following query: <a href="http://api.jamendo.com/get2/stream/track/plain/?tag_idstr=rock&amp;n=50&amp;order=random_desc">http://api.jamendo.com/get2/stream/track/plain/?tag_idstr=rock&amp;n=50&amp;order=random_desc</a>. The result is a list of the location of the MP3 file for 50 random rock songs, one on each line. We can just copy and paste one line to the browser to listen to the song.</p>
+
+    <h2>1.4 Coding a script to evaluate the hypothesis using examples from the Web</h2>
+    <p>Now that we know the location of 50 Rock songs, let's write a script that runs the genre recognition programme <b>isRock</b> on these tracks and tells how many times the programme correctly returns <code>True</code> (songs are Rock). We are going to write the script in Python. Open your command line and type</p>
+    <pre><span class="shell">$</span> python</pre>
+    <p>which opens up the python interpreter if you have it installed. Next write the following code:</p>
+    <pre>from urllib import urlopen</pre>
+    <pre>from isrock import isRock</pre>
+    <p>This imports a library to access Web pages and the isRock recognition programme. Then write</p>
+    <pre>query = "http://api.jamendo.com/get2/stream/track/plain/?n=50&amp;tag_idstr=rock&amp;order=random_desc"</pre>
+    <pre>result = urlopen(query).read()</pre>
+    <p>This stores the API query in a local variable, then submits the query to Jamendo to retrieve the page with the list of 50 random Rock songs. Each song is written in a line, so we need to split the result by line, to transform this page into an array. For this purpose write:</p>
+    <pre>songs = result.split()</pre>
+    <p>Finally, we want to call the isRock programme on each of this song, and count the ratio of times that the programme correctly returns <code>True</code>. Write:</p>
+    <pre>rock = [isRock(song) for song in songs]</pre>
+    <pre>print "The ratio of rock songs is: %.2f" % (float(rock.count(True))/len(songs))</pre>
+    <p>The result corresponds to the precision of the genre recognition algorithm, evaluated on this set of 50 Rock songs. Now you can quit the python interpreter by writing</p>
+    <pre>exit()</pre>
+    <p>You do not need to save the script, since it is already included in the folder <b>c/</b> of your package, under the name <b>jamendo_1.py</b>. You can simply type:</p>
+    <pre><span class="shell">$</span> python jamendo_1.py</pre>
+    <p>to run it again on a different set of 50 random Rock songs.</p>
+
+    <h2>1.5 Expanding the script</h2>
+    <p>To complete the evaluation of the programme, we need to compare the result obtained with 50 Rock songs with the result obtained with non-Rock songs. If we observe a statistically significant difference between the two scenarios, then we can accept the programme as a valid genre recogniser, otherwise the hypothesis would be refused.</p>
+    <p>In the folder <b>c/</b> you will find a slightly more advanced script called <b>c/jamendo_2.py</b> which improves the previous one by allowing users to specify in the command line:</p>
+    <ol>
+      <li>the number of songs on which to run the genre recogniser</li>
+      <li>the genres of the songs on which to run the programme.</li>
+    </ol>
+    <p>For instance, if you just type:</p>
+    <pre><span class="shell">$</span> python jamendo_2.py 30 rock jazz country rnb</pre>
+    <p>you can compare the performance of the isRock programme on sets of 30 random songs from each of the following genres: Rock, Jazz, Country, R'n'B.</p>
+    <p>Running this programme, it becomes clear that the genre recogniser software I have written is not working! It was just a fake, so luckily MIREX competitions will live on for a couple more years. In fact the result is that the software I have written classifies <span class="note">[change with correct results]</span> half of the Jazz tracks as rock or half of the Rock tracks as non-Rock.</p>
+
+    <h2>1.6 What we have learnt</h2>
+    <p>We have learnt how to programme a script that collects songs by means of a Web API, and then use these songs for a particular evaluation purpose. We have worked at the <b>level of songs</b>, but Jamendo allows for much more powerful and diverse queries, at the level of albums, artists, playlists or users.</p>
+    <p>The main advantages of working with Jamendo are:</p>
+    <ol>
+      <li>the availability of a sound Web API</li>
+      <li>the fact that tracks can legally be downloaded</li>
+      <li>the fact that tracks already have a genre label attached</li>
+    </ol>
+    <p>We have learnt that a Web API returns data in a format that is more concise and practical that what is commonly shown in an entire Web page. Thanks to API, we did not have to <b>crawl the Web page</b> and parse its <b>HTML code</b>. We have worked with <b>plain text</b> files. Jamendo API can also provide more structured formats such as JSON and XML.</p>
+    <p>We have learnt how easily and rapidly data can be retrieved from the Web, so that you can avoid <b>manually collecting</b> songs on your hard disks and <b>manually categorise</b> them into a genre classification. Depending on your needs, you might find <b>other Web sites</b> more appropriate to your research. Just make sure they offer an API, which makes things much easier when dealing with query results.</p>
+
+
+    <h1>2. Mashing up (Lyricsfly and Last.fm)</h1>
+    <p>In the first example we have seen how to automatically collect musical data <b>from one</b> Web site (Jamendo) for a specific goal. In this second example we are going to see how can as easily <b>combine musical data from multiple</b> Web sites for more advanced purposes.</p>
+    <p>In this second example we will <b>deal with lyrics</b>. Different ISMIR papers have recently focused on lyrics-based analysis or recommender systems:</p>
+    <p>2005 Knees, Peter ; Schedl, Markus ; Widmer, Gerhard "Multiple Lyrics Alignment: Automatic Retrieval of Song Lyrics"</p>
+    <p>2006 Geleijnse, Gijs ; Korst, Jan "Efficient Lyrics Extraction from the Web"</p>
+    <p>2008 Kleedorfer, Florian ; Knees, Peter ; Pohle, Tim "Oh Oh Oh Whoah! Towards Automatic Topic Detection in Song Lyrics"</p>
+    <p>2008 Mayer, Rudolf ; Neumayer, Robert ; Rauber, Andreas "Rhyme and Style Features for Musical Genre Categorisation By Song Lyrics"</p>
+    <p>The common characteristic for these papers is the way in which lyrics were obtained: using Google Web search. For instance, the authors would type"lyrics &lt;song name&gt; &lt;artist name&gt;", navigate to the resulting page and extract the lyrics from the HTML code. This method is <b>inherently noisy</b> and cumbersome: finding the lyrics may require checking multiple sites and cleaning up the surrounding HTML code before finally obtaining the lyrics of the song.</p>
+    <p>From the first example, we have learnt that the same process can be performed more practically by using Web APIs. Indeed, there are sites that offer lyrics through Web APIs, so in this example we are going to use one of them called <b>LyricsFly</b> which allows direct query for specific lyrics.</p>
+
+    <h2>2.1 Retrieving lyrics using a Web API</h2>
+    <p>LyricsFly is a "song lyrics search database", as the title states, and can be reached at <a href="http://lyricsfly.com">http://lyricsfly.com</a>. If you write <i>Rihanna</i> in the search box, then click on <i>Umbrella</i>, you will get the complete lyrics for that song. If you click on the link <i>API</i> in the top you will see the documentation that explains how the same lyrics can be obtained using their Web API.</p>
+    <p>One main difference between Jamendo API and Lyricsfly API is that the last one <b>requires users to authenticate</b>. This is common to many Web sites and intended to <b>limit the number of queries per user</b>. To obtain a <b>proper API key</b>, send an e-mail to the development team. Otherwise, you can get a <b>temporary API key</b> by clicking on the "<i>Click to get key</i>" link.</p>
+    <p>As explained in the page, you can get the lyrics of a specific song by means of the URL: <a href="http://lyricsfly.com/api/api.php?i=[USER%20ID]&amp;a=[ARTIST]&amp;t=[TITLE]">http://lyricsfly.com/api/api.php?i=[USER ID]&amp;a=[ARTIST]&amp;t=[TITLE]</a> so if we just copy and paste this URL in the browser and use the temporary API key: <a href="http://lyricsfly.com/api/api.php?i=91cbb76afd4f18217-temporary.API.access&amp;a=Rihanna&amp;t=Umbrella">http://lyricsfly.com/api/api.php?i=91cbb76afd4f18217-temporary.API.access&amp;a=Rihanna&amp;t=Umbrella</a> we will get the lyrics for Umbrella (Rihanna). A temporary key will only return a portion of the lyrics.</p>
+
+    <h2>2.2 A ruby script to retrieve lyrics</h2>
+    <p>Now that we know how to retriever lyrics using LyricsFly API, let's write a short snippet of code to do this automatically for every song of our interest. The first thing we need to do is to store the <b>API key</b> in a local file, so if you do not have a proper LyricsFly API key, just copy and paste the temporary one from the Web site, then run the following command:</p>
+    <pre><span class="shell">$</span> echo '$lyricsfly_key = "PASTE YOUR KEY HERE"' &gt; lyricsfly_key.rb</pre>
+    <p>Then run the following command:</p>
+    <pre><span class="shell">$</span> irb</pre>
+    <p>which launches the interpreter of a different language that we are going to use for this example, called <b>ruby</b>. At this point write the following lines:</p>
+    <pre>require 'net/http'</pre>
+    <pre>require 'rexml/document'</pre>
+    <pre>require 'lyricsfly_key'</pre>
+    <p>These include the necessary libraries to access Web pages and parse XML files and the API key. Then write:</p>
+    <pre>url = "http://lyricsfly.com/api/api.php?a=Rihanna&amp;t=Umbrella&amp;i=#{$lyricsfly_key}"</pre>
+    <pre>result = Net::HTTP.get_response(URI.parse(url))</pre>
+    <p>which prepares in a string the URL querying about the lyrics of Umbrella (Rihanna) and retrieves the result. The lyrics are returned inside an XML file, contained between the <code>&lt;tx&gt;</code>…<code>&lt;/tx&gt;</code> tags. To extract and print them, just type:</p>
+    <pre>response = REXML::Document.new(result.body).elements['//tx']</pre>
+    <pre>puts response.text</pre>
+    <p>Finally type:</p>
+    <pre>exit</pre>
+    <p>to close the ruby interpreter. The code we have written is already included in the folder <b>c/</b> under the name <b>lyricsfly_1.rb</b>. You can run it again by typing:</p>
+    <pre><span class="shell">$</span> ruby lyricsfly_1.rb</pre>
+    <p>Similarly to the previous example, I have prepared a more advanced version of this script in the folder <b>c/</b> called <b>lyricsfly_2.rb</b>. To retrieve any lyrics of your choice, run this programme in the command line, followed by the artist name and song title, such as:</p>
+    <pre><span class="shell">$</span> ruby lyricsfly_2.rb "John Lennon" Imagine</pre>
+    <p>This programme also makes sure to correctly visualise "strange" characters in the lyrics and to remove the "[br]" that are present at the end of each line.</p>
+
+    <h2>2.3 Mashing up Lyricsfly and Last.fm APIs</h2>
+    <p>How can you, as music researchers, benefit from the script we have just written? As I said, lyrics-based analysis is gaining attention in the MIR community, and can provide valuable results. I was particularly inspired by one paper presented here last year and called ‘Rhyme and Style Features for Musical Genre Classification by Song Lyrics’, by Mayer, Neumayer and Rauber. In this paper, the authors stated that <b>musical genres can be identified</b> based on <b>textual differences</b> in their lyrics. An example they provided is that Country and Hip-hop songs can easily distinguished observing the <b>number of question marks</b> present in their lyrics. To evaluate their hypothesis, the authors <q>report on experiments performed for a test collection of 397 song lyrics</q>, of which 29 Country and 41 Hip-Hop.</p>
+    <p>What we are going to do now is to <b>reproduce the experiment</b> but on a larger data set of songs, to test whether their results hold also for different songs. For this purpose, we need to access at least <b>two Web sites</b>:</p>
+    <ol>
+      <li>first we want to obtain a list of Hip-hop and Country songs</li>
+      <li>then we want to retrieve the lyrics for these songs, and compare the average number of question marks.</li>
+    </ol>
+    <p>The second step can be done using the script we have just written that accesses Lyricsfly Web API. The first step (retrieve songs belonging to specific genres) is what we did in the previous example, where we used Jamendo API to retrieve Rock and Jazz songs. However, in this example we will not use Jamendo as a source of categorised songs, but instead <b>Last.fm</b>. The reason is that Last.fm contains more popular and famous music than Jamendo, therefore it is more probable that Lyricsfly contains lyrics for those songs.</p>
+
+    <h2>2.4 Accessing Last.fm music catalogue</h2>
+    <p>Last.fm is most popular community for music lovers and has an API that allows developer to get data directly in XML format. Documentation and examples are published at <a href="http://www.last.fm/api/intro">http://www.last.fm/api/intro</a> — on the left you will see a list of functions that can be used to obtain data from Last.fm. For our particular example, we are interested in the function <i>tag.getTopTracks</i> which returns the top tracks labelled with a given tag. If you click on the example presented in the page, you will obtain the top tracks tagged as "Disco" in XML format. If you substitute in the URL the word "Disco" with either "Country" or "Hip Hop" you will get exactly what we need: a list of songs belonging to these genres. Similarly to Lyricsfly, Last.fm API <b>also requires authentication</b> through an API key, which can be obtained for free from Last.fm.</p>
+
+    <h2>2.5 A script to distinguish musical genres by textual analysis</h2>
+    <p>Now let's write a programme that takes these lists of genre-classified songs from Last.fm, passes their titles and artists to LyricsFly, analyse their lyrics and prints out the average number of question marks by genre.</p>
+    <p>For the sake of time, I will not write the snippet of code here. Simply open the file <b>lyricsfly_3.rb</b> inside the <b>c/</b> folder and you will see the complete source code that I am going to describe:</p>
+    <ul>
+      <li>The first function <i>get_lyrics</i> is exactly the same as in <b>lyricsfly_2.rb</b>: given an artist and a title, retrieves from LyricsFly the lyrics of the song.</li>
+      <li>The second function <i>get_artists_and_titles</i> is the new component: given a genre, retrieves from Last.fm a list of songs (artists and titles) belonging to that genre. This is done calling the <i>tag.getTopTracks</i> query we have just seen.</li>
+      <li style="list-style: none">In this case you do not need to create a Last.fm API key because I have already included a valid one in the <b>lastfm_key.rb</b> file in the <b>c/</b> folder.</li>
+      <li>Finally, the last part of the code reads a series of genres from the command-line and, for each genre, first retrieves songs from Last.fm, then retrieves their lyric from LyricsFly, then counts the average number of question marks.</li>
+    </ul>
+    <p>To run this programme, type:</p>
+    <pre><span class="shell">$</span> ruby lyricsfly_3.rb country hip-hop</pre>
+    <p>to compare the average number of question marks in Country and Hip-hop songs. The result is <span class="note">[watch the result]</span> which confirms the experiments presented in the paper, highlighting how Hip Hop songs have in average far more question marks than Country songs.</p>
+
+    <h2>2.6 What we have learnt</h2>
+    <p>We have learnt that there are <b>multiple programming languages</b> which can serve to retrieve musical data from the Web (Python, Ruby and more). The important thing when choosing one is to make sure it includes libraries to access Web pages and parse XML code to extract information from Web APIs.</p>
+    <p>We have seen once again how <b>practical</b> it use to work with APIs, since we are not subject to graphical changes that may occur on a Web site: the structure and format of the data returned by the API stays the same.</p>
+    <p>We have learnt that data coming from different sites can be easily <b>combined</b> to fulfil specific goals. This technique is also known as <b>mash-up</b>; in this example we have gathered data from Last.fm, then submitted them as a query to Lyricsfly. Mash-ups can be used to uncover relationships between musical object and data from different domains.</p>
+
+    <h2>2.7 More about mash-up code</h2>
+    <p>I will just show now a different example of why mash-up code can be useful. I will not explain here the source code for this example but will tell you how to obtain in case you want to play with it. Navigate to: <a href="http://ismir2009.benfields.net/gmapradio">http://ismir2009.benfields.net/gmapradio</a> and you will see an application which plots, on a <b>Google</b> map, data coming from <b>Yes.com</b> about music played by FM radio stations. Specifically, the more intense the red colour of a state, the more the percentage of FM stations that are currently broadcasting Country music in that state. Grey states are those for which broadcasting data is not available.</p>
+    <p>This application is written in Ruby and combines three different APIs:</p>
+    <ul>
+      <li>Yes.com API to retrieve real-time information about which songs are currently playing in each FM radio</li>
+      <li>Last.fm API to identify the songs, artists and their genres</li>
+      <li>Google Maps API to plot the percentage of Country songs as color overlays over the United States map.</li>
+    </ul>
+    <p>This example is particularly interesting because it works with <b>real-time data</b> and offers a kind of visualisation that is much clearer than percentage numbers. Moreover, it is able to <b>store data incrementally</b> over time. This means that you can observe how these values change over time and get an idea about the distribution of Country music over time, not just over space. If you navigate to: <a href="http://ismir2009.benfields.net/gmapradio.mov">http://ismir2009.benfields.net/gmapradio.mov</a> you will see a video that I have recorded on a 24-hours period <span class="note">[to be done!]</span> showing how the ratio of Country music changes from morning to night. If you are interested in this kind of mash-up, you can take the entire source code from the repository: <a href="http://github.com/claudiob/radiotagmap">http://github.com/claudiob/radiotagmap</a> and modify it as you like, for instance to plot different data on a map (different genres, tags, artists, et cetera).</p>
+    <p><span class="note">[Here I would end my first part and pass it to you, Ben. What do you think in general about this first part? It is "enough" introductory? Or "too much"? Will people get bored? Will they be interested? Are the examples too stupid? Too smart? Too much code? Not enough? Not enough focused on MIR and music?]</span></p>
+
+
+    <h1>3. Audio Analysis Tools (Echonest)</h1>
+    <p>So far we have seen how we can <b>retrieve data</b> from the Web. The following example is substantially different from the previous ones: we are going to use the Web as a source of <b>musical analysis tools</b>. In particular, we are going to make use of the <b>Echo Nest</b>, a web site that enables to perform much of the work you would normally do in a desktop application such as Matlab, or using packages such as Marsyas.</p>
+    <p>With the Echo Nest, no software is required: you just have to upload a song to their server to get a full audio analysis including, among others, key, time signature, loudness, beat, sections, harmony. Navigate to <a href="http://echonest.com/analyze/">http://echonest.com/analyze/</a> to can get an idea of what the Echo Nest can do.</p>
+
+    <h2>3.1 Calculating the tempo of a song</h2>
+    <p>The first piece of code that we are going to write is meant to show you how quickly you can obtain the <b>tempo</b> of a song, with just an Internet connection and one command-line programme, without any audio analysis software on your computer.</p>
+    <p>The documentation of the Echo Nest API is published at <a href="http://developer.echonest.com/pages/overview.">http://developer.echonest.com/pages/overview.</a> Of all the methods listed on the left we are going to use only two for now: <i>upload</i> to upload an audio file to the Echo Nest server, and <i>get_tempo</i> to obtain the tempo of a previously uploaded track. Similarly to Last.fm and Lyricsfly, the Echo Nest requires developers to <b>register</b> and <b>authenticate</b> through an API key. I have already prepared a file called <b>echonest_key.rb</b> in the <b>c/</b> folder which contains a valid Echo Nest API key, so you do not need one for this example. If you do however have your own key, substitute it in this file.</p>
+    <p>The script we will write is in ruby, so launch the ruby interpreter typing:</p>
+    <pre><span class="shell">$</span> irb</pre>
+    <p>Then start by writing the following lines:</p>
+    <pre>require 'net/http'</pre>
+    <pre>require 'rexml/document'</pre>
+    <pre>require 'echonest_key'</pre>
+    <p>to include the libraries to open Web pages and parse XML documents and the Echo Nest API key. Then write:</p>
+    <pre>song = 'http://ismir2009.benfields.net/m/120bpm.mp3'</pre>
+    <pre>url= "http://developer.echonest.com/api/upload"</pre>
+    <pre>result = Net::HTTP.post_form(URI.parse(url),</pre>
+    <pre>{'api_key' =&gt; $echonest_key, 'version' =&gt; '3', 'url' =&gt; song})</pre>
+    <p>First we specify the location of the song of which we want to retrieve the tempo. In this case is a 120 BPM short track that is loaded on our server and is also present in your <b>m/</b> folder named <b>120bpm.mp3</b>. Then we build the URL of the <i>upload</i> query to submit an audio file to the Echo Nest server. According to the documentation, we need to specify separately the API key, the version (always 3), and then the location of the audio file.</p>
+    <p>Once the track has been uploaded, the Echo Nest returns an XML file which includes the <b>id</b> assigned to that track. We read the song_id as follows:</p>
+    <pre>song_id = REXML::Document.new(result.body).elements['//track'].attributes['id']</pre>
+    <p>Finally, we ask the Echo Nest to return the tempo of the song, submitting the <i>get_tempo</i> query as follows:</p>
+    <pre>url =  "http://developer.echonest.com/api/get_tempo"</pre>
+    <pre>url += "?api_key=#{$echonest_key}&amp;id=#{song_id}&amp;version=3"</pre>
+    <pre>result = Net::HTTP.get_response(URI.parse(url))</pre>
+    <p>The result is an XML file which contains the tempo value between the tags <code>&lt;tempo&gt;</code>. We extract and print the value as follows:</p>
+    <pre>tempo = REXML::Document.new(result.body).elements['//tempo'].text</pre>
+    <pre>puts "The estimated tempo is #{tempo} BPM"</pre>
+    <p>Finally we can type</p>
+    <pre>exit</pre>
+    <p>to leave the ruby interpreter. The entire source code is in the folder <b>c/</b> in the file <b>echonest_1.rb</b>. To run it again, just type:</p>
+    <pre><span class="shell">$</span> ruby echonest_1.rb</pre>
+
+    <h2>3.2 Audio analysis of any song</h2>
+    <p>If you are not just interested in the <b>tempo</b> but also in other features, you can check the source code of <b>echonest_2.rb</b> which is different from <b>echonest_1.rb</b> in that you can specify on the command line which track to analyse, and obtain tempo, mode, key and time signature. For instance, type:</p>
+    <pre><span class="shell">$</span> ruby echonest_2.rb http://ismir2009.benfields.net/m/120bpm.mp3</pre>
+    <p>to analyse the same file as before. The result has to be interpreted as follows:</p>
+    <ul>
+      <li>mode = 1 corresponds to Major</li>
+      <li>time signature = 4 corresponds to 4/4</li>
+      <li>tempo = 120.013 corresponds to BPM, and</li>
+      <li>key = 5 corresponds to E (see <a href="http://developer.echonest.com/forums/thread/9">http://developer.echonest.com/forums/thread/9</a> for more details).</li>
+    </ul>
+    <p>Running the same programme on a different MP3 file will return different results, for instance:</p>
+    <pre><span class="shell">$</span> ruby echonest_2.rb http://ismir2009.benfields.net/m/vocal.mp3</pre>
+
+    <h2>3.3 Are "sad" songs in minor mode and "happy" songs in major mode?</h2>
+    <p>Now that we have seen how to analyse audio files by means of the Echo Nest API, we are going to create a <b>mash-up</b> to combine the Echo Nest analyser with lists of songs provided by Jamendo. Our goal will be to evaluate the following preposition: "Most sad songs are in minor mode, most happy songs are in major mode".</p>
+    <p>To do this, we will perform a two-step process:</p>
+    <ol>
+      <li>First we will retrieve from Jamendo lists of songs labelled as either "sad" or "happy"</li>
+      <li>Then we will analyse them with the Echo Nest API and check whether a significant association exists between sad/minor and happy/major songs.</li>
+    </ol>
+    <p>Once again, the source code for this example is included in the <b>c/</b> folder and is called <b>echonest_3.rb</b>. The code is structured as follows:</p>
+    <ul>
+      <li>The function <i>get_analysis</i> is exactly the same as in <b>c/echonest_2.rb</b>, taking the direction of an audio file in input and returning its audio analysis from the Echo Nest</li>
+      <li>The function <i>get_tracks</i> is similar to the one we wrote in the Jamendo example and retrieves from Jamendo a list of 5 tracks labelled with a certain tag</li>
+      <li>The last part combines it all together: for each mood (happy/sad) a list of songs is retrieved from Jamendo, then analysed through the Echo Nest and their mode distribution written to the output.</li>
+    </ul>
+    <p>To launch the programme, write:</p>
+    <pre><span class="shell">$</span> ruby echonest_3.rb sad happy</pre>
+    <p>This may take some time to run, given the number of songs we are requesting, but in the end it returns the result. As we can see, on 5 random sad and happy songs, the results are <span class="note">[check the results]</span>. Repeating the experiment with more songs can serve as a proper evaluation of the hypothesis. Just be sure not to submit <b>too many queries</b> to the same API in a short period of time, since you may get blocked depending on the policy of the site.</p>
+
+    <h2>3.4 What we have learnt</h2>
+    <p>We have learnt that several Web sites make available <b>both musical data and tools</b> that can be accessed via Web APIs to be retrieved in compact formats such as plain text or XML.</p>
+    <p>We have learnt that resources from different sites can be mashed up for specific purposes.</p>
+    <p><span class="note">[Here I would end my second part and pass it to you, Ben. I would just mention other Web sites that we have not explored but that are worth a look, for instance Musicbrainz for identification and ontology; but maybe this is already included in your part]</span></p>
+
+
+    <h1>4. Social Survey (Facebook)</h1>
+    <p>In the last example we will not <b>extract</b> musical knowledge from the Web. Instead we will code an application that allows people to <b>add</b> musical knowledge, to <b>express their opinions</b> about musical questions.</p>
+    <p>As researchers, we face different occasions where we require <b>subjective evaluation</b> to verify our hypotheses. For instance, if you work an automatic composition, on recommender systems, on mood-based analysis, sooner or later you need to know the <b>feedback</b> of real people about the results you obtain.</p>
+    <p>A common way to set up a <b>survey</b> is to set up a simple <b>Web page</b> where people are faced with some musical objects and asked to express their feedback. For instance if you navigate to <a href="http://ismir2009.benfields.net/c/facebook_1.php">http://ismir2009.benfields.net/c/facebook_1.php</a> you can see a sample survey, which asks people whether they think the song they are listening has been performed by a human or by a robot. The main drawback with this kind of surveys is that they are <b>isolated</b>. You need a way to <b>share them</b> with a large audience, which often comes down to sending personal e-mails or inviting friends to answer. Moreover, if you are interested in a demographic analysis of the results, as in this case, you require users to <b>enter personal data</b> before they can answer a simple question. Somehow you should also make sure that <b>people do not vote twice</b>. When the survey is terminated, you should also <b>inform voters</b> about the outcome, so they feel they have been useful in some form. All these details can make the survey process time-expensive and boring.</p>
+
+    <h2>4.1. Advantages of social networks</h2>
+    <p>What we are going to see in this example is how you can easily <b>transform a Web survey into a Facebook application</b>. The motivation for doing this is that, if you present a survey in Facebook, you can immediately have a large number of friends who become aware of the survey, and can share it with other friends. Moreover, you can easily log in every voter, so that you <b>obtain personal data</b> without asking to fill a form, and can also <b>prevent people from voting twice</b>. Once the survey is over, you can automatically <b>send a message</b> to every voter to inform of the result; all of this without sending a single e-mail message. Summing up, publishing surveys on a social network such as Facebook is a <b>powerful</b> tool for a series of reasons:</p>
+    <ol>
+      <li>you can collect personal data without asking to fill a new form</li>
+      <li>you can explore social connections between users</li>
+      <li>you can share and publish your survey through network of friends</li>
+      <li>you can potentially reach millions of users within a friendly environment</li>
+      <li>you can create applications in the form of game to attract people (and their friends).</li>
+    </ol>
+
+    <h2>4.2. A common PHP Web-based survey</h2>
+    <p>Now let's move to the source code. We are going to start from the source code of the simple survey page you have seen before, and transform it into a Facebook application. You can find the source code of the survey page in the folder <b>c/</b> named <b>facebook_1.php</b>. The code is written in <b>PHP</b> since this is the preferred language for Facebook developers.</p>
+    <p>As I told you, this page plays an audio file and asks voters to decide whether it was performed by a human or by a robot. The audio file is actually taken from "SAXEX: A Case-Based Reasoning system for generating expressive musical performances", a work by Arcos, Lopez De Mantaras and Serra published in the Journal of New Music Research in 1998 which described a technique by which a robot could play a saxophone track emulating the performance of a real musician.</p>
+    <p>The first part of the source code is the page shown to the people before they cast their vote. It contains an MP3 player which starts playing the audio file <a href="http://ismir2009.benfields.net/m/saxex.mp3">http://ismir2009.benfields.net/m/saxex.mp3</a> as the page loads, and a form which asks for personal data and an answer to the survey.</p>
+    <p>The second part of the source code collects the user's vote, store it in a local file together with the personal data submitted, then shows the file and a summary of the votes so far for "Human" and "Robot".</p>
+
+    <h2>4.3. Creating a Facebook application</h2>
+    <p>The first step to transform this survey into a Facebook application is to have a <b>Facebook account</b> or create a new one, specifying your e-mail and confirming the registration.</p>
+    <p>The second step is to navigate to <a href="http://www.facebook.com/developers/apps.php">http://www.facebook.com/developers/apps.php</a> and <b>add the Developer application</b> to your Facebook profile. Then you <b>click on Set up new application</b> to create a new application and specify the <b>name of the application</b> accepting the terms. For instance, we can call our application <b>human_or_robot_survey</b>.</p>
+    <p>Having created the application, Facebook returns some <b>keys</b> that need be included in the source code to run the application in Facebook. For this purpose, open the file <b>facebook_key.php</b> in the <b>c/</b> folder and copy and paste the presented keys, for instance:</p>
+    <pre>&lt;?php</pre>
+    <pre># Copy and paste your Facebook application ID, API key and secret key</pre>
+    <pre>$app_id = "170850830008";</pre>
+    <pre>$api_key = "7b835778bae3c255b0586a55fa2043f8";</pre>
+    <pre>$secret_key = "6ec34840390de9b86d7dd88ae33066f1";</pre>
+    <pre>?&gt;</pre>
+
+    <h2>4.4. Collecting personal data in a Facebook form</h2>
+    <p>Now we are going to modify the Web survey code. First we are going to open <b>facebook_1.php</b> and save it with a new name such as <b>facebook.php</b>, that we will now modify. Then, the first change consist in <b>importing the API keys</b> that we have just copied and pasted. So we add the following line:</p>
+    <pre>require_once('facebook_key.php');</pre>
+    <p>Now, in order to connect to the Facebook platform we also need to import the <b>Facebook developer library</b>. This is provided for free by Facebook, and it is already included in the <b>c/</b> folder, under the name <b>facebook-platform</b>. If you need to get a new copy, just browse to Facebook developers' page <a href="http://www.facebook.com/developers/apps.php">http://www.facebook.com/developers/apps.php</a> and then click on the link "Download the Client Library".</p>
+    <p>Moving back to the <b>facebook.php</b> file, we now add the following lines:</p>
+    <pre>require_once('facebook-platform/php/facebook.php');</pre>
+    <pre>$facebook = new Facebook($api_key, $secret);</pre>
+    <pre>$user = $facebook-&gt;require_login();</pre>
+    <p>The first line includes the Facebook library, the second line connects the application to Facebook, and the last line specifies that users have to be logged into Facebook before they can use the application.</p>
+    <p>When users land on the survey page, they see something similar to the old survey page: an MP3 file and a form. Facebook provides a specific code to include MP3 file into a page, so we are going to substitute the <code>&lt;object&gt;</code>…<code>&lt;/object&gt;</code> code with the following one:</p>
+    <pre>&lt;fb:mp3 src="http://ismir2009.benfields.net/m/saxex.mp3"</pre>
+    <pre>title="Autumn Leaves" album="Autumn Leaves" artist="Human or Robot?" /&gt;</pre>
+    <p>Regarding the form, we can simply <b>remove the entire set of fields related to personal data</b> and leave only the survey question, as follows:</p>
+    <pre>&lt;form&gt;</pre>
+    <pre>&lt;b&gt;Survey:&lt;/b&gt;&lt;br /&gt;</pre>
+    <pre>This song was performed by a</pre>
+    <pre>&lt;input type=submit value='Human' name='vote' /&gt; or by a</pre>
+    <pre>&lt;input type=submit value='Robot' name='vote' /&gt; ?</pre>
+    <pre>&lt;/form&gt;</pre>
+    <p>The reason why we <b>do not ask for personal information</b> is that we can <b>pull these data from Facebook users' profiles</b>, rather than asking for them explicitly. In order to obtain these data, we just have to add the following lines of code in the second part of the programme:</p>
+    <pre>$info = reset($facebook-&gt;api_client-&gt;users_getStandardInfo($user,</pre>
+    <pre>   array('first_name', 'last_name', 'sex', 'birthday', 'current_location')));</pre>
+    <pre>$info['birth_year'] = isset($info['birthday']) ? date("Y", strptime($info['birthday'], "%m %d, %Y")) : '';</pre>
+    <pre>$info['city'] =isset($info['current_location']) ? $info['current_location']['city'] : '';</pre>
+    <p>The first line retrieves some <b>standard information</b> about the Facebook user, namely <b>first name</b>, <b>last name</b>, <b>sex</b>, <b>birthday</b>, <b>current location</b>. The second and third line simply extract the <b>birth year</b> and the <b>city</b> from the birthday and the current location respectively. The rest of the code is unchanged. We can therefore save the file <b>facebook.php</b>. If you want to see the entire source code, just open in the <b>c/</b> folder the file called <b>facebook_2.php</b>.</p>
+
+    <h2>4.5. Deploying a Facebook application</h2>
+    <p>Now that we have prepared the PHP file that contains the survey for Facebook users, we need to <b>upload the file</b> into a Web server where Facebook can retrieve it. This can be in fact any Web server supporting PHP; in our case we have already uploaded the file to our server, which can be accessed at:</p>
+    <p><a href="http://ismir2009.benfields.net/c/facebook_2.php">http://ismir2009.benfields.net/c/facebook_2.php</a></p>
+    <p>Now we have to tell Facebook the location of this file, so we go back to the application developer page that we left open in the browser and make the following changes:</p>
+    <ol>
+      <li>In the <b>Canvas Page URL</b> we introduce the URL that we want to assign to the survey. For instance we can write <b>human_or_robot_survey</b> to have the application published at <a href="http://apps.facebook.com/human_or_robot_survey/">http://apps.facebook.com/human_or_robot_survey/</a></li>
+      <li>In the <b>Canvas Callback URL</b> we introduce the URL of the PHP file we have just written; in this case <a href="http://ismir2009.benfields.net/c/facebook_2.php">http://ismir2009.benfields.net/c/facebook_2.php</a></li>
+      <li>Finally in <b>Canvas Settings &gt; Render Method</b> we specify FBML and then we save changes.</li>
+    </ol>
+    <p>That's it, our application is now on Facebook. Just browse to the direction that we have specified, for instance <a href="http://apps.facebook.com/human_or_robot_survey/">http://apps.facebook.com/human_or_robot_survey/</a> and you will see the application running. Since we required users to be logged in, you have to authorise the application before you can use it. In this way, the application can read your personal data and store them in the survey. If you click on a button, you will see that your vote is stored, together with your information retrieved from Facebook.</p>
+
+    <h2>4.6 What we have learnt</h2>
+    <p>We have learnt how rapidly you can create and deploy applications on Facebook.</p>
+    <p>We have described only one the benefits of integrating an application in a social network, that is, pulling personal data. However there are many more features, like sharing application among friends, navigating the user's network of friends, making the application available for multiple devices, collect musical preferences over time, and so on.</p>
+    <p>Reference to herd-it</p>
+  </body>
+</html>

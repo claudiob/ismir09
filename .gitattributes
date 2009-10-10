@@ -1,0 +1,4 @@
+.gitignore export-ignore
+.htaccess export-ignore
+favicon.ico export-ignore
+claudio.html export-ignore
