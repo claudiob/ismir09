@@ -1,4 +1,5 @@
-This project lists snippets of code that will be used during the tutorial in the ISMIR 2009 conference to illustrate how the Internet can be mined for music-related data and algorithms.
+This project include snippets of code that will be presented at the ISMIR 2009 conference in Kobe (Japan) as part of the tutorial "Mining the Social Web for Music-Related Data | A Hands-On Tutorial" by Claudio Baccigalupo and Benjamin Fields.
 
-Each folder contains a different example (e.g., how to retrieve lyrics, how to obtain genre-labelled songs). 
-Please refer to the README file in every folder for more details.
+The file index.html describes the requirements for running the code examples.
+The folder c/ contains the example codes.
+The the folder m/ includes audio files that are part of the examples. 
