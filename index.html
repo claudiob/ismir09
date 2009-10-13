@@ -47,14 +47,26 @@
         <dd>
           This programming language is pre-installed in many Unix systems, including OS X. To test the presence of Python on a computer, open a Terminal console and type:
           <code><span class="shell">shell&gt;</span> python --version</code>
-          If the command returns an error, then Python is not installed. In this case, download and install Python following the instructions at <a href="http://python.org/download/">python.org</a>. Recommended version: <strong>2.6</strong>.
+          If the command returns an error, then Python is not installed. 
+          In this case, Python can be downloaded from <a href="http://python.org/download/">python.org</a> or installed directly from the console by typing:
+          <code><span class="shell">shell&gt; </span>wget http://www.python.org/ftp/python/2.6.3/Python-2.6.3.tgz</code>
+          <code><span class="shell">shell&gt; </span>gunzip &lt; Python-2.6.3.tgz | tar xvf -</code>
+          <code><span class="shell">shell&gt; </span>cd Python-2.6.3</code>
+          <code><span class="shell">shell&gt; </span>./configure --prefix=/usr/local --enable-unicode=ucs4</code>
+          <code><span class="shell">shell&gt; </span>make; sudo make install</code>
         </dd>
 
         <dt>Ruby <em>(examples 2, 4)</em></dt>
         <dd>
           This programming language is pre-installed in recent versions of OS X. To test the presence of Ruby on a computer, open a Terminal console and type:
           <code><span class="shell">shell&gt;</span> ruby --version</code>
-          If the command returns an error, then Ruby is not installed. In this case, download and install Ruby following the instructions at <a href="http://www.ruby-lang.org/en/downloads/">ruby-lang.org</a>. Recommended version: <strong>1.8.7</strong>.
+          If the command returns an error, then Ruby is not installed. 
+          In this case, Ruby can be downloaded from <a href="http://www.ruby-lang.org/en/downloads/">ruby-lang.org</a> or installed directly from the console by typing:
+          <code><span class="shell">shell&gt; </span>wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.1-p243.tar.gz</code>
+          <code><span class="shell">shell&gt; </span>gunzip &lt; ruby-1.9.1-p243.tar.gz | tar xvf -</code>
+          <code><span class="shell">shell&gt; </span>cd ruby-1.9.1-p243</code>
+          <code><span class="shell">shell&gt; </span>./configure --prefix=/usr/local</code>
+          <code><span class="shell">shell&gt; </span>make; sudo make install</code>
         </dd>
 
         <dt><a name="last.fm"></a>Last.fm <acronym title="Application programming interface">API</acronym> key <em>(examples 2, 3)</em></dt>
@@ -105,10 +117,19 @@
           Source code and documentation of <acronym title="SoundCloud API">scapi</acronym> are maintained at <a href="http://github.com/soundcloud/python-api-wrapper">github.com/soundcloud/python-api-wrapper</a>. 
           <img src="i/scapi.png" alt="scapi home-page" />
           <acronym title="SoundCloud API">scapi</acronym> can be downloaded and installed from the shell console by typing:
+          <!-- Git Installation >
           <code><span class="shell">shell&gt; </span>git clone git://github.com/soundcloud/python-api-wrapper.git</code>
           <code><span class="shell">shell&gt; </span>cd python-api-wrapper</code>
           <code><span class="shell">shell&gt; </span>sudo python setup.py install</code>
           Download is done via git, a version control system available at <a href="http://git-scm.com/download">git-scm.com/download</a>.
+           -->
+
+          <code><span class="shell">shell&gt; </span>wget http://peak.telecommunity.com/dist/ez_setup.py</code>
+          <code><span class="shell">shell&gt; </span>sudo python ez_setup.py</code>
+          <code><span class="shell">shell&gt; </span>wget http://github.com/soundcloud/python-api-wrapper/tarball/master -O scapi.tar.gz</code>
+          <code><span class="shell">shell&gt; </span>gunzip &lt; scapi.tar.gz | tar xvf -</code>
+          <code><span class="shell">shell&gt; </span>cd soundcloud-python-api-wrapper-<strong>VERSION</strong></code>
+          <code><span class="shell">shell&gt; </span>sudo python setup.py install</code>
         </dd>
 
         <dt><a name="soundcloud"></a>SoundCloud App key <em>(example 5)</em></dt>
@@ -136,6 +157,7 @@
           <code><span class="shell">shell&gt; </span>gunzip &lt; igraph-0.5.2.tar.gz | tar xvf -</code>
           <code><span class="shell">shell&gt; </span>cd igraph-0.5.2</code>
           <code><span class="shell">shell&gt; </span>./configure --prefix=/usr/local; make; sudo make install</code>
+          <code><span class="shell">shell&gt; </span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</code>
           The Python interface for igraph v0.5.2 can also be installed by typing:
           <code><span class="shell">shell&gt; </span>wget http://pypi.python.org/packages/source/p/python-igraph/python-igraph-0.5.tar.gz</code>
           <code><span class="shell">shell&gt; </span>gunzip &lt; python-igraph-0.5.tar.gz | tar xvf -</code>

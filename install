@@ -1,0 +1,105 @@
+#
+# INSTALL PYTHON 2.6.3
+#
+wget http://www.python.org/ftp/python/2.6.3/Python-2.6.3.tgz
+gunzip < Python-2.6.3.tgz | tar xvf -
+rm Python-2.6.3.tar.gz 
+cd Python-2.6.3/
+./configure --prefix=/usr/local --enable-unicode=ucs4
+make
+sudo make install
+cd ..
+
+#
+# INSTALL RUBY 1.9.1
+#
+wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.1-p243.tar.gz
+gunzip < ruby-1.9.1-p243.tar.gz | tar xvf -
+rm ruby-1.9.1-p243.tar.gz 
+cd ruby-1.9.1-p243/
+./configure --prefix=/usr/local
+make
+sudo make install
+cd ..
+
+#
+# INSTALL PYLAST 0.4.15
+#
+wget http://pypi.python.org/packages/source/p/pylast/pylast-0.4.15.tar.gz
+gunzip < pylast-0.4.15.tar.gz | tar xvf -
+rm pylast-0.4.15.tar.gz 
+cd pylast-0.4.15
+sudo python setup.py install
+cd ..
+
+#
+# NOTE: To install SCAPI, ZLIB and GIT are not really necessary
+#       One could just type:
+# wget http://github.com/soundcloud/python-api-wrapper/tarball/master -O soundcloud-python-api-wrapper.tar.gz
+# gunzip < soundcloud-python-api-wrapper.tar.gz | tar xvf -
+# cd soundcloud-python-api-wrapper
+# sudo python setup.py install
+# cd ..
+#
+# However the slides use GIT, so here it is how to install SCAPI with GIT
+#
+# INSTALL ZLIB 1.2.3 (required by git)
+#
+wget http://www.zlib.net/zlib-1.2.3.tar.gz
+gunzip < zlib-1.2.3.tar.gz | tar xvf -
+rm zlib-1.2.3.tar.gz 
+cd zlib-1.2.3/
+./configure --prefix=/usr/local
+make
+sudo make install
+cd ..
+#
+# INSTALL GIT 1.6.5
+#
+wget http://kernel.org/pub/software/scm/git/git-1.6.5.tar.gz
+gunzip < git-1.6.5.tar.gz | tar xvf -
+rm git-1.6.5.tar.gz 
+cd git-1.6.5/
+./configure --prefix=/usr/local --without-tcltk
+make
+sudo make install
+cd ..
+
+#
+# INSTALL SETUPTOOLS (required by SCAPI)
+#
+wget http://peak.telecommunity.com/dist/ez_setup.py
+sudo python ez_setup.py
+#
+# INSTALL SCAPI
+#
+git clone git://github.com/soundcloud/python-api-wrapper.git  
+cd python-api-wrapper
+sudo python setup.py install
+cd ..
+
+#
+# INSTALL G++
+#
+
+# INSTALL IGRAPH 0.5.2
+
+wget http://switch.dl.sf.net/sourceforge/igraph/igraph-0.5.2.tar.gz  
+gunzip < igraph-0.5.2.tar.gz | tar xvf -  
+rm igraph-0.5.2.tar.gz
+cd igraph-0.5.2  
+./configure --prefix=/usr/local
+# Only on Ubuntu: sudo apt-get install build-essential
+make 
+sudo make install
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+cd ..
+#
+# INSTALL IGRAPH PYTHON INTERFACE 0.5
+#
+wget http://pypi.python.org/packages/source/p/python-igraph/python-igraph-0.5.tar.gz  
+gunzip < python-igraph-0.5.tar.gz | tar xvf -  
+rm python-igraph-0.5.tar.gz
+cd python-igraph-0.5  
+sudo python setup.py install
+cd ..
