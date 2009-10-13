@@ -8,8 +8,9 @@ def get_lyrics(artist_and_title)
   
   url = "http://lyricsfly.com/api/api.php?a=#{artist}&t=#{title}&i=#{$lyricsfly_key}"
   result = Net::HTTP.get_response(URI.parse(url))
+  body = result.body.gsub(/[^\x20-\x7e]/,'')
   
-  response = REXML::Document.new(result.body).elements['//tx']
+  response = REXML::Document.new(body).elements['//tx']
   response.text.gsub("[br]", "") unless response.nil?
 end
 
